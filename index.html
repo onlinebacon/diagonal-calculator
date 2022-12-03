@@ -1,0 +1,78 @@
+<html>
+	<head>
+		<title>Diagonal Calculator</title>
+		<meta charset="utf-8">
+		<style>
+			body {
+				text-align: center;
+				font-family: Arial, Helvetica, sans-serif;
+				color: #ccc;
+				background-color:#222;
+				margin-top: 30px;
+			}
+			.fields, .preview {
+				display: inline-block;
+				vertical-align: top;
+				text-align: left;
+			}
+			h2 {
+				text-align: center;
+			}
+			canvas {
+				box-shadow: -5px 5px 10px #111;
+			}
+			.field {
+				padding: 7px;
+				background-color: #333;
+				margin-bottom: 5px;
+				width: 200px;
+				border-radius: 5px;
+			}
+			.field input {
+				width: calc(100% - 0px);
+				border: 1px solid #444;
+				background-color: #171717;
+				color: #ccc;
+				padding: 5px;
+			}
+			.field input[disabled] {
+				background-color: #272727;
+			}
+			.field select {
+				padding: 5px;
+				border: 1px solid #777;
+				background-color: #555;
+				color: #ccc;
+				width: calc(100% - 0px);
+			}
+			.preview {
+				margin-left: 20px;
+			}
+		</style>
+		<script type="module" src="main.js"></script>
+	</head>
+	<body>
+		<div class="fields">
+			<script src="./field-builder.js"></script>
+			<script>
+				'abcde'.split('').forEach(name => {
+					writeTextField(name, name.toUpperCase() + ' length');
+				});
+				writeSelectField('surface', 'Surface', [{
+					title: 'Flat',
+					value: 'flat',
+				}, {
+					title: 'Spherical',
+					value: 'spherical',
+				}]);
+				writeTextField('radius', 'Sphere radius');
+				writeTextField('f', 'F length');
+				document.querySelector('[name="f"]').setAttribute('disabled', 'true');
+			</script>
+		</div>
+		<div class="preview">
+			<h2>Preview</h2>
+			<canvas width="400" height="300"></canvas>
+		</div>
+	</body>
+</html>
