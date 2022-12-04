@@ -48,6 +48,18 @@
 			.preview {
 				margin-left: 20px;
 			}
+			.rotate {
+				margin-top: 20px;
+				text-align: right;
+			}
+			.rotate input[type="button"] {
+				border: none;
+				background-color: #111;
+				color: #ccc;
+				width: 60px;
+				height: 28px;
+				cursor: pointer;
+			}
 		</style>
 		<script type="module" src="main.js"></script>
 	</head>
@@ -73,6 +85,9 @@
 		<div class="preview">
 			<h2>Preview</h2>
 			<canvas width="400" height="300"></canvas>
+			<div class="rotate">
+				<input type="button" value="Rotate">
+			</div>
 		</div>
 	</body>
 </html>

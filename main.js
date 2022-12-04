@@ -3,6 +3,10 @@ import { getSecondDiagonalFlat, getSecondDiagonalSphere } from './math.js';
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
+let rotation = 0;
+const getSide = (index) => 'ABDC'[(index + rotation)&3];
+const getDiagonal = (index) => 'EF'[(index + rotation)&1];
+
 const drawSpot = (x, y) => {
 	ctx.beginPath();
 	ctx.arc(x, y, 4, 0, Math.PI*2);
@@ -39,21 +43,23 @@ const drawPreview = () => {
 	drawLine(x0, y1, x1, y1);
 	drawLine(x0, y0, x1, y1);
 	drawLine(x1, y0, x0, y1);
+	const [ a, b, d, c ] = [ 0, 1, 2, 3 ].map(getSide);
+	const [ e, f ] = [ 0, 1 ].map(getDiagonal);
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'top';
-	ctx.fillText('A', (x0 + x1)*0.5, y0 + 5);
+	ctx.fillText(a, (x0 + x1)*0.5, y0 + 5);
 	ctx.textBaseline = 'bottom';
-	ctx.fillText('D', (x0 + x1)*0.5, y1 - 5);
+	ctx.fillText(d, (x0 + x1)*0.5, y1 - 5);
 	ctx.textBaseline = 'middle';
 	ctx.textAlign = 'left';
-	ctx.fillText('C', x0 + 5, (y0 + y1)*0.5);
+	ctx.fillText(c, x0 + 5, (y0 + y1)*0.5);
 	ctx.textAlign = 'right';
-	ctx.fillText('B', x1 - 5, (y0 + y1)*0.5);
+	ctx.fillText(b, x1 - 5, (y0 + y1)*0.5);
 	ctx.textAlign = 'left';
 	ctx.textBaseline = 'bottom';
-	ctx.fillText('E', x0*0.75 + x1*0.25 + 5, y0*0.75 + y1*0.25 - 5);
+	ctx.fillText(e, x0*0.75 + x1*0.25 + 5, y0*0.75 + y1*0.25 - 5);
 	ctx.textAlign = 'top';
-	ctx.fillText('F', x0*0.75 + x1*0.25 + 5, y1*0.75 + y0*0.25 + 5);
+	ctx.fillText(f, x0*0.75 + x1*0.25 + 5, y1*0.75 + y0*0.25 + 5);
 };
 
 drawPreview();
@@ -101,4 +107,10 @@ const update = () => {
 
 [ ...document.querySelectorAll('input, select') ].forEach(input => {
 	input.oninput = update;
+});
+
+document.querySelector('[type="button"]').addEventListener('click', () => {
+	rotation = (rotation + 3)&3;
+	drawPreview();
+	update();
 });
